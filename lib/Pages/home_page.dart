@@ -1,3 +1,4 @@
+import 'package:ecommerceapp/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -9,7 +10,7 @@ class HomePage extends StatelessWidget {
         appBar: AppBar(
           title: Text("ecommerce app"),
         ),
-        drawer: Drawer(),
+        drawer: MyDrawer(),
       );
     
   }
