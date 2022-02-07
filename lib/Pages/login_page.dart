@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ecommerceapp/utils/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +12,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool changeButton = false;
+  final _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,37 +28,64 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 Form(
+                    key: _formkey,
                     child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 20.0),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        decoration: const InputDecoration(
-                            hintText: "Enter UserName", labelText: "UserName"),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 18.0, horizontal: 20.0),
+                      child: Column(
+                        children: [
+                          TextFormField(
+                            decoration: const InputDecoration(
+                                hintText: "Enter UserName",
+                                labelText: "UserName",),
+                                validator: (value) {
+                                  if(value == null || value.isEmpty)
+                                  {
+                                    return "UserName cannot be empty";
+                                    
+                                  }
+                                  return null;
+                                  
+                                },
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(
+                                hintText: "Enter Password",
+                                labelText: "Password"),
+                            obscureText: true,
+                            validator: (value) {
+                              if(value == null || value.isEmpty)
+                              {
+                                return "Password cannot be empty";
+                              }
+                              else if(value.length < 6)
+                              {
+                                return "password must contain 6 letters";
+                              }
+                              return null;
+                            },
+                          )
+                        ],
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                            hintText: "Enter Password", labelText: "Password"),
-                        obscureText: true,
-                      )
-                    ],
-                  ),
-                )),
+                    )),
                 SizedBox(
                   height: 20,
                 ),
 
                 InkWell(
                   onTap: () async {
-                    setState(() {
+                    if(_formkey.currentState!.validate())
+                    {
+                      setState(() {
                       changeButton = true;
                     });
                     await Future.delayed(Duration(seconds: 1));
                     Navigator.pushNamed(context, MyRoute.homeRoute);
+                    }
+                    
                   },
                   child: AnimatedContainer(
                     duration: Duration(seconds: 1),
@@ -68,7 +98,10 @@ class _LoginPageState extends State<LoginPage> {
                           BorderRadius.all(const Radius.circular(30.0)),
                     ),
                     child: changeButton
-                        ? Icon(Icons.done,color: Colors.white,)
+                        ? Icon(
+                            Icons.done,
+                            color: Colors.white,
+                          )
                         : Text(
                             "Login",
                             style: TextStyle(
