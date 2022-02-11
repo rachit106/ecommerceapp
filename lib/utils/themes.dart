@@ -9,4 +9,6 @@ class MyThemes{
     static ThemeData darkTheme(BuildContext context) =>ThemeData(
       brightness: Brightness.dark
     );
+
+    static Color lightBrownColor = const Color(0xffefebe9);
 }

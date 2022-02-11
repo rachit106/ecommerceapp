@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:ecommerceapp/utils/routes.dart';
 import 'package:ecommerceapp/widgets/drawer.dart';
 import 'package:ecommerceapp/widgets/item_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -31,7 +33,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Colors.brown[50],
+      backgroundColor: Colors.brown[50],
+       floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, MyRoute.cartRoute);
+          },
+          child:Icon(CupertinoIcons.cart),
+        ),
       appBar: AppBar(
         title: Text("ecommerce app"),
       ),
