@@ -1,4 +1,5 @@
 import 'package:ecommerceapp/Pages/home_detail_page.dart';
+import 'package:ecommerceapp/models/cart.dart';
 import 'package:ecommerceapp/utils/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,9 @@ class ItemWidget extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Cart.items.add(product);
+                        },
                         child: Icon(CupertinoIcons.cart)
                       )
                     ],
