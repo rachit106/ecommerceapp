@@ -4,6 +4,7 @@ import 'package:ecommerceapp/Pages/login_page.dart';
 import 'package:ecommerceapp/utils/routes.dart';
 import 'package:ecommerceapp/utils/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,16 +16,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return Sizer(builder: (context,orientation,devicetype){
+return MaterialApp(
       title: 'Flutter Demo',
       theme: MyThemes.defaultTheme(context),
       routes: {
-        "/":(context)=>HomePage(),
+        "/":(context)=>LoginPage(),
         MyRoute.homeRoute:(context)=>HomePage(),
         MyRoute.loginRoute:(context)=>LoginPage(),
         MyRoute.cartRoute:(context)=>CartPage(),
       },
     );
+    });
+    
   }
 
   

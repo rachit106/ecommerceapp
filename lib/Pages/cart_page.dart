@@ -1,3 +1,5 @@
+import 'package:ecommerceapp/Pages/home_detail_page.dart';
+import 'package:ecommerceapp/Pages/home_page.dart';
 import 'package:ecommerceapp/models/cart.dart';
 import 'package:flutter/material.dart';
 
@@ -9,15 +11,9 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-
- 
- refresh(){
-   setState(() {
-     
-   });
-
-   
- }
+  refresh() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +21,24 @@ class _CartPageState extends State<CartPage> {
     num price = 0;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Text("Cart"),
       ),
       body: Column(
         children: [
           Padding(padding: EdgeInsets.all(20)),
-          Expanded(child: CartList(notifyrefresh:refresh)),
+          Expanded(
+              child: Cart.items.length != 0
+                  ? CartList(notifyrefresh: refresh)
+                  : Center(
+                      child: Text(
+                      "No products added to cart",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ))),
           Divider(),
           SizedBox(
             height: 200,
@@ -44,7 +52,7 @@ class _CartPageState extends State<CartPage> {
                 ElevatedButton(
                     onPressed: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Buying not supported")));
+                          SnackBar(content: Text("Buying not supported yet")));
                     },
                     child: Text("Buy"))
               ],
@@ -58,7 +66,7 @@ class _CartPageState extends State<CartPage> {
 
 class CartList extends StatefulWidget {
   final Function() notifyrefresh;
-  const CartList({Key? key,required this.notifyrefresh}) : super(key: key);
+  const CartList({Key? key, required this.notifyrefresh}) : super(key: key);
 
   @override
   State<CartList> createState() => _CartListState();
@@ -67,7 +75,6 @@ class CartList extends StatefulWidget {
 class _CartListState extends State<CartList> {
   @override
   Widget build(BuildContext context) {
-    print(Cart.items);
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
         leading: Icon(Icons.done),
@@ -80,6 +87,7 @@ class _CartListState extends State<CartList> {
             },
             icon: Icon(Icons.remove_circle_outline)),
         title: Text(Cart.items[index]["name"]),
+        subtitle: Text(Cart.items[index]["desc"]),
       ),
       itemCount: Cart.items.length,
     );

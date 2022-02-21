@@ -1,33 +1,39 @@
+import 'package:ecommerceapp/models/cart.dart';
 import 'package:ecommerceapp/utils/themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class HomeDetailPage extends StatelessWidget {
+class HomeDetailPage extends StatefulWidget {
   final item;
 
-  const HomeDetailPage({Key? key,  this.item}) : super(key: key);
+  const HomeDetailPage({Key? key, this.item}) : super(key: key);
 
+  @override
+  State<HomeDetailPage> createState() => _HomeDetailPageState();
+}
+
+class _HomeDetailPageState extends State<HomeDetailPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Material(
         child: Scaffold(
-          appBar: AppBar(
-          ),
+          appBar: AppBar(),
           backgroundColor: MyThemes.lightBrownColor,
           body: Column(
             children: [
               Hero(
-                tag: Key(item["id"].toString()),
+                tag: Key(widget.item["id"].toString()),
                 child: Image.network(
-                  item["image"],
-                  height: 250,
+                  widget.item["image"],
+                  height: 35.0.h ,
                 ),
               ).p16(),
               Expanded(
                   child: VxArc(
-                height: 30,
+                height: 4.h,
                 arcType: VxArcType.CONVEY,
                 edge: VxEdge.TOP,
                 child: Container(
@@ -37,12 +43,12 @@ class HomeDetailPage extends StatelessWidget {
                     children: [
                       Padding(padding: EdgeInsets.all(20)),
                       Text(
-                        item["name"],
-                        style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                        widget.item["name"],
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
                       ),
                       Text(
-                        item["desc"],
+                        widget.item["desc"],
                         style: Theme.of(context).textTheme.caption,
                         textScaleFactor: 1,
                       ),
@@ -60,13 +66,24 @@ class HomeDetailPage extends StatelessWidget {
             alignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "\$" + item["price"].toString(),
-                style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20,color: Colors.red[800]),
+                "\$" + widget.item["price"].toString(),
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 3.h,
+                    color: Colors.red[800]),
               ),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(minimumSize: Size(80, 50)),
-                onPressed: () {},
-                child: Text("buy",style: TextStyle(fontSize: 15),),
+                style: ElevatedButton.styleFrom(minimumSize: Size(20.w, 8.h)),
+                onPressed: () {
+                  if (!Cart.items.contains(widget.item)) {
+                    Cart.items.add(widget.item);
+                  }
+          
+                  setState(() {});
+                },
+                child: Cart.items.contains(widget.item)
+                    ? const Icon(Icons.done)
+                    : const Icon(CupertinoIcons.cart),
               )
             ],
           ),

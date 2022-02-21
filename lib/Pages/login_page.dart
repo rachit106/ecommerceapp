@@ -1,7 +1,5 @@
-
 import 'package:ecommerceapp/utils/routes.dart';
 import 'package:flutter/material.dart';
-
 
 class LoginPage extends StatefulWidget {
   @override
@@ -34,17 +32,15 @@ class _LoginPageState extends State<LoginPage> {
                         children: [
                           TextFormField(
                             decoration: const InputDecoration(
-                                hintText: "Enter UserName",
-                                labelText: "UserName",),
-                                validator: (value) {
-                                  if(value == null || value.isEmpty)
-                                  {
-                                    return "UserName cannot be empty";
-                                    
-                                  }
-                                  return null;
-                                  
-                                },
+                              hintText: "Enter UserName",
+                              labelText: "UserName",
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "UserName cannot be empty";
+                              }
+                              return null;
+                            },
                           ),
                           SizedBox(
                             height: 20,
@@ -55,17 +51,15 @@ class _LoginPageState extends State<LoginPage> {
                                 labelText: "Password"),
                             obscureText: true,
                             validator: (value) {
-                              if(value == null || value.isEmpty)
-                              {
+                              if (value == null || value.isEmpty) {
                                 return "Password cannot be empty";
-                              }
-                              else if(value.length < 6)
-                              {
+                              } else if (value.length < 6) {
                                 return "password must contain 6 letters";
                               }
                               return null;
                             },
-                          )
+                          ),
+                          
                         ],
                       ),
                     )),
@@ -75,15 +69,16 @@ class _LoginPageState extends State<LoginPage> {
 
                 InkWell(
                   onTap: () async {
-                    if(_formkey.currentState!.validate())
-                    {
+                    if (_formkey.currentState!.validate()) {
                       setState(() {
-                      changeButton = true;
-                    });
-                    await Future.delayed(Duration(seconds: 1));
-                    Navigator.pushNamed(context, MyRoute.homeRoute);
+                        changeButton = true;
+                      });
+                      // if (changeButton = !true) {
+                      //   CircularProgressIndicator;
+                      // }
+                      await Future.delayed(Duration(seconds: 1));
+                      Navigator.pushNamed(context, MyRoute.homeRoute);
                     }
-                    
                   },
                   child: AnimatedContainer(
                     duration: Duration(seconds: 1),
